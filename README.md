@@ -134,7 +134,7 @@ spec:
             pathType: Prefix
 
 
-Note2: We will use GCP ManagedCertificate for easy certificates maintenance 
+Note2: Use GCP ManagedCertificate for easy certificates maintenance 
 
 apiVersion: networking.gke.io/v1
 kind: ManagedCertificate
