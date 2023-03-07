@@ -1,5 +1,5 @@
 
-## GCP GKE -> Terraform infrastructure provisioning for DEV/QA/PROD environments:
+## GCP GKE : Terraform infrastructure provisioning for DEV/QA/PROD environments
 
 How to deploy GKE cluster with terraform (workflow details):
 1. Sign up/in for GCP and manually create a new GCP Project for environment (Example: dev1-gke for DEV1 environment)
