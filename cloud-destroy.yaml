@@ -1,0 +1,36 @@
+steps:
+  - id: "Create Backend Bucket"
+    name: 'gcr.io/cloud-builders/gsutil'
+    entrypoint: '/bin/bash'
+    args: ['-c', gsutil mb -c standard -l europe-west3 gs://$_ENV_TF_BUCKET || true]
+
+  - id : "Get Service Account Credentials"
+    name: gcr.io/cloud-builders/gcloud
+    entrypoint: 'bash'
+    args: [ '-c', "gcloud secrets versions access latest --secret=terraform_service_account --format='get(payload.data)' | tr '_-' '/+' | base64 -d > service-account.txt" ]
+
+  - id: 'Terraform init'
+    name: 'hashicorp/terraform:0.13.0'
+    entrypoint: 'sh'
+    args: 
+    - '-c'
+    - |
+      echo ""
+      echo "*************** INIT STEP ***********************"
+      echo "*************************************************"
+      echo ""
+      echo "We'r always hitting reconfigure to kill terraform cache"
+      terraform init -backend-config "bucket=$_ENV_TF_BUCKET" --reconfigure || exit 1
+  
+  - id: 'Terraform destroy'
+    name: 'hashicorp/terraform:0.13.0'
+    entrypoint: 'sh'
+    args: 
+      - '-c'
+      - |
+        echo ""
+        echo "*************** DESTROY STEP **********************"
+        echo "*************************************************"
+        echo ""
+        terraform destroy -var-file=./clients/$_ENV_NAME.tfvars -auto-approve
+timeout: 1800s
