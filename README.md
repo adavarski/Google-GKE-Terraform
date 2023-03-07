@@ -95,7 +95,7 @@ To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
 ```
 ### Notes
 
-Note1: GCP terraform network module (platform static addresses for K8S Ingresses)
+Note1: GCP terraform network module (platform static addresses for K8S Ingresses, DNS: add api.dev1.dev & dev1.dev A records before k8s ingress creation)
 ```
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -134,7 +134,7 @@ spec:
             pathType: Prefix
 
 
-Note: We will use GCP ManagedCertificate for easy certificates maintenance 
+Note2: We will use GCP ManagedCertificate for easy certificates maintenance 
 
 apiVersion: networking.gke.io/v1
 kind: ManagedCertificate
@@ -158,7 +158,7 @@ spec:
 Etc.
 ```
 
-Note2: GitOps with ArgoCD for K8S workloads -> REF: https://github.com/adavarski/ArgoCD-GitOps-playground
+Note3: GitOps with ArgoCD for K8S workloads -> REF: https://github.com/adavarski/ArgoCD-GitOps-playground
 
 
 TODO: Automate GKE cluster provisioning via GitHub Actions + Terraform for GitOps (currently GCP CloudBuild used)
